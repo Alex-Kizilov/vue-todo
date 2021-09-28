@@ -13,16 +13,23 @@ export default createStore({
     }
   }),
   getters: {
+    getTodos: (state) => {
+      return state.todos
+    },
     getTodoById: (state) => (todoId) => {
       return state.todos.find(el => el.id === todoId)
     },
     getTodosByFilters: (state) => {
       const {todos, filters} = state
       const {bySelected, byIsEnd} = filters
-      console.log(bySelected, byIsEnd)
-
-        return todos.filter(todo => todo.selected === bySelected && todo.isEnd === byIsEnd)
-
+      if (bySelected === '' && byIsEnd === '') {
+        return todos
+      } else if (byIsEnd === '') {
+        return todos.filter(todo => todo.selected === bySelected)
+      } else if (bySelected === '') {
+        return todos.filter(todo => todo.isEnd === byIsEnd)
+      }
+      return todos.filter(todo => todo.selected === bySelected && todo.isEnd === byIsEnd)
     },
     getFilters: (state) => {
       return state.filters
@@ -37,6 +44,7 @@ export default createStore({
       state.todos = [...state.todos, todo]
     },
     deleteTodo(state, todoId) {
+      console.log(todoId)
       state.todos = state.todos.filter(el => el.id !== todoId)
     },
     toggleTodoField(state, {todoId, field}) {
@@ -47,6 +55,12 @@ export default createStore({
     },
     setFilter(state, {filterName, filterValue}) {
       state.filters[filterName] = filterValue
+    },
+    clearFilters(state) {
+      state.filters = {
+        bySelected: '',
+        byIsEnd: ''
+      }
     }
   }
 })

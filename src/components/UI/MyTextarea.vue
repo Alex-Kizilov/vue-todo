@@ -1,18 +1,16 @@
 <template>
-  <select
-    class="select"
+  <textarea
+    class="todo-form__textarea textarea"
     required
+    placeholder="Описание"
     :value="modelValue"
     @change="updateValue"
-  >
-    <slot></slot>
-  </select>
+  ></textarea>
 </template>
 
 <script>
-
   export default {
-    name: "my-select",
+    name: "my-textarea",
     props: {
       modelValue: String
     },

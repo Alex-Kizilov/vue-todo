@@ -1,18 +1,17 @@
 <template>
-  <select
-    class="select"
-    required
+  <input
+    class="todo-form__input input"
+    required=""
+    type="text"
+    placeholder="Название"
     :value="modelValue"
     @change="updateValue"
   >
-    <slot></slot>
-  </select>
 </template>
 
 <script>
-
   export default {
-    name: "my-select",
+    name: "my-input",
     props: {
       modelValue: String
     },

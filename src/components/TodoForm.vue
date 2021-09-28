@@ -1,33 +1,20 @@
 <template>
   <div class="todo-form">
-    <form class="todo-form__form" action="" @submit.prevent>
-      <input
-        class="todo-form__input input"
-        required=""
-        type="text"
-        placeholder="Название"
-        v-model="title"
-      >
-      <textarea
-        class="todo-form__textarea textarea"
-        required
-        placeholder="Описание"
-        v-model="body"
-      >
-
-      </textarea>
+    <my-form class="todo-form__form" action="" @submit.prevent>
+      <my-input v-model="title"/>
+      <my-textarea v-model="body"/>
       <my-select v-model="selected">
         <option>Очень важно</option>
         <option>Важно</option>
         <option>Не важно</option>
       </my-select>
-      <button
+      <my-button
         class="todo-form__btn btn"
         @click="createTodo"
       >
         Создать задачу
-      </button>
-    </form>
+      </my-button>
+    </my-form>
   </div>
 </template>
 
@@ -36,11 +23,15 @@
   import {useStore} from 'vuex'
   import TodosList from "@/components/TodosList";
   import MySelect from "@/components/UI/MySelect";
+  import MyTextarea from "@/components/UI/MyTextarea";
+  import MyInput from "@/components/UI/MyInput";
+  import MyButton from "@/components/UI/MyButton";
+  import MyForm from "@/components/UI/MyForm";
 
   export default {
     name: "todo-form",
-    components: {MySelect, TodosList},
-    setup(props) {
+    components: {MyForm, MyButton, MyInput, MyTextarea, MySelect, TodosList},
+    setup(props, context) {
       const store = useStore()
       const title = ref('')
       const body = ref('')
@@ -58,13 +49,7 @@
       const createTodo = () => {
         try {
           checkForm()
-          store.commit('setTodo', {
-            title: title.value,
-            body: body.value,
-            selected: selected.value,
-            isEnd: isEnd.value,
-            id: Date.now()
-          })
+          context.emit('add', {title: title.value, body: body.value, selected: selected.value, isEnd: isEnd.value})
         } catch (e) {
           alert(e)
         }

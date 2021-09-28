@@ -13,18 +13,18 @@
         <option>Важно</option>
         <option>Не важно</option>
       </my-select>
-      <button
+      <my-button
         class="todo-item__btn-remove btn btn-remove"
         @click.stop="deleteTodo(todo.id)"
       >
         Удалить
-      </button>
-      <button
+      </my-button>
+      <my-button
         class="todo-item__btn-end btn btn-end"
         @click.stop="toggleIsEnd(todo.id)"
       >
         Завершить
-      </button>
+      </my-button>
     </div>
   </div>
 </template>
@@ -33,29 +33,42 @@
   import {useStore} from "vuex";
   import {useRouter} from "vue-router";
   import MySelect from "@/components/UI/MySelect";
+  import MyButton from "@/components/UI/MyButton";
 
   export default {
     name: "todos-item",
-    components: {MySelect},
+    components: {MyButton, MySelect},
     props: {
       todo: {
         type: Object
       },
     },
-    setup(props) {
+    setup(props, context) {
       const store = useStore()
       const router = useRouter()
 
+      // const deleteTodo = (todoId) => {
+      //   store.commit('deleteTodo', todoId)
+      // }
+
       const deleteTodo = (todoId) => {
-        store.commit('deleteTodo', todoId)
+        context.emit('remove', todoId)
       }
+
+      // const routerPush = (todoId) => {
+      //   router.push(`/todo/${todoId}`)
+      // }
 
       const routerPush = (todoId) => {
-        router.push(`/todo/${todoId}`)
+        context.emit('push', todoId)
       }
 
+      // const toggleIsEnd = (todoId) => {
+      //   store.commit('toggleTodoField', {todoId, field: 'isEnd'})
+      // }
+
       const toggleIsEnd = (todoId) => {
-        store.commit('toggleTodoField', {todoId, field: 'isEnd'})
+        context.emit('toggle', todoId)
       }
 
       return {
