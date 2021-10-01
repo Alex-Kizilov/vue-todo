@@ -15,12 +15,7 @@
 </script>
 
 <style lang="scss">
-  @import "@/assets/styles";
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  @import "@/scss/styles";
 
   .container {
     max-width: 1200px;

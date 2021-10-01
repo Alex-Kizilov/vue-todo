@@ -11,7 +11,7 @@
     @remove="deleteTodo"
     @push="routerPushByIdTodo"
     @toggle="toggleIsEnd"
-    @filter=""
+    @select="setSelect"
   />
 </template>
 
@@ -21,12 +21,14 @@
   import TodoFilter from "@/components/TodoFilter";
   import {useStore} from "vuex";
   import {computed} from "vue";
-  import {useRouter} from "vue-router";
+  import {useRouter, useRoute} from "vue-router";
+  import MyButton from "@/components/UI/MyButton";
   export default {
     name: "Main",
-    components: {TodoFilter, TodosList, TodoForm},
+    components: {MyButton, TodoFilter, TodosList, TodoForm},
     setup(props) {
       const store = useStore()
+      const route = useRoute()
       const router = useRouter()
       const todos = computed(() => store.getters.getTodosByFilters)
       const addPost = ({title, body, selected, isEnd}) => {
@@ -41,6 +43,7 @@
       }
       const clearFilters = () => {
         store.commit('clearFilters')
+        router.push('/')
       }
 
       const toggleIsEnd = (todoId) => {
@@ -48,8 +51,15 @@
       }
 
       const filterTodos = (options) => {
-        console.log('work')
         store.commit('setFilter', options)
+        console.log([options.filterName])
+        router.push({
+          query: {...route.query, [options.filterName]: options.filterValue}
+        })
+      }
+
+      const setSelect = (payload) => {
+        store.commit('setTodoSelected', payload)
       }
 
       return {
@@ -59,7 +69,8 @@
         routerPushByIdTodo,
         clearFilters,
         toggleIsEnd,
-        filterTodos
+        filterTodos,
+        setSelect,
       }
     }
 

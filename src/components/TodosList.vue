@@ -6,6 +6,7 @@
       @remove="deleteTodoById"
       @push="routerPushById"
       @toggle="toggleIsEndById"
+      @select="setSelectedById"
     />
 </template>
 
@@ -32,11 +33,16 @@
         context.emit('toggle', todoId)
       }
 
+      const setSelectedById = (payload) => {
+        context.emit('select', payload)
+      }
+
       return {
         props,
         deleteTodoById,
         routerPushById,
         toggleIsEndById,
+        setSelectedById
       }
     }
   }

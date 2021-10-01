@@ -44,17 +44,17 @@ export default createStore({
       state.todos = [...state.todos, todo]
     },
     deleteTodo(state, todoId) {
-      console.log(todoId)
       state.todos = state.todos.filter(el => el.id !== todoId)
     },
     toggleTodoField(state, {todoId, field}) {
       state.todos.find(el => el.id === todoId)[field] = !state.todos.find(el => el.id === todoId)[field]
     },
     setTodoSelected(state, {todoId, selected}) {
-      state.todos.find(el => el.id === todoId).selected = !state.todos.find(el => el.id === todoId)[selected]
+      state.todos.find(el => el.id === todoId).selected = selected
     },
     setFilter(state, {filterName, filterValue}) {
       state.filters[filterName] = filterValue
+      console.log(state.filters, 'filter')
     },
     clearFilters(state) {
       state.filters = {

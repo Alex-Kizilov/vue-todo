@@ -1,7 +1,6 @@
 <template>
   <textarea
-    class="todo-form__textarea textarea"
-    required
+    class="textarea"
     placeholder="Описание"
     :value="modelValue"
     @change="updateValue"
@@ -26,6 +25,16 @@
   }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+  @import "@/scss/_variables";
+  .textarea {
+    border-radius: 4px;
+    padding: 10px;
+    max-width: 100%;
+    font-size: 18px;
+    border: 1px solid $border-color;
+    &:focus {
+      border: 1px solid $border-color-on-focus;
+    }
+  }
 </style>

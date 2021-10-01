@@ -1,5 +1,5 @@
 <template>
-  <form action="">
+  <form action="" class="form">
     <slot></slot>
   </form>
 </template>
