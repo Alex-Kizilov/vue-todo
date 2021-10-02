@@ -4,13 +4,4 @@ module.exports = {
       "@": require("path").resolve(__dirname, "src")
     }
   },
-  css: {
-    loaderOptions: {
-      sass: {
-        data: `
-          @import "@/scss/_variables.scss";
-        `
-      }
-    }
-  }
 };
